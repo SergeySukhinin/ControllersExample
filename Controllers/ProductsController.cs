@@ -34,16 +34,18 @@ namespace ControllersExample.Controllers
             {
                 //return StatusCode(401);
                 return Unauthorized("User must be authenticated");  // status 401
+                //return StatusCode(401);
             }
-
+            bool islogged = Convert.ToBoolean(Request.Query["islogged"]);
             //return Json(new Product(Convert.ToUInt16(Request.Query["id"])));
 
             /***
               response is 302 - Found (temporary redirect
-            //return new RedirectToActionResult("Books", "Store", new { }); //without passing any parameters
+            return new RedirectToActionResult("Books", "Store", new { }); //without passing any parameters
+            
             // shortcut for redirect:
-            //return RedirectToAction("Books", "Store", new { id = itemId });
-
+            return RedirectToAction("Books", "Store", new { id = itemId, isloggedin = islogged });
+            
             // response is 301 - Moved Permanently
 
             // BE CAREFUL WITH USING RedirectToActionPERMANENT!!! Your browser will go straight to the new controller without going through this code.
@@ -51,24 +53,24 @@ namespace ControllersExample.Controllers
 
             //return new RedirectToActionResult("Books", "Store", new { }, permanent: true); 
             //shortcut for permanent redirect:
-            //return RedirectToActionPermanent("Books", "Store", new { id = itemId });
-
-            //return new RedirectToActionResult("Books", "Store", new Product(Convert.ToUInt16(Request.Query["id"])));
+            //return RedirectToActionPermanent("Books", "Store", new { id = itemId, isloggedin = islogged });
+            
+            return new RedirectToActionResult("Books", "Store", new { id = itemId, isloggedin = islogged });
             */
 
             /***
              * ANOTHER WAY TO REDIRECT USING A URL:
              */
             // response 302 - Found
-            return new LocalRedirectResult($"/store/books/{itemId}");
+            //return new LocalRedirectResult($"/store/books/{itemId}/{islogged}");
             // the shortcut is:
-            //return new RedirectResult($"/store/books/{itemId}");
+            //return new RedirectResult($"/store/books/{itemId}/{islogged}");
             // or:
-            //return Redirect($"/store/books/{itemId}");
+            return Redirect($"/store/books/{itemId}/{islogged}");
 
             //response 301 - Moved Permanently
-            //return new RedirectResult($"/store/books/{itemId}", true);
-            //return RedirectPermanent($"/store/books/{itemId}");
+            //return new RedirectResult($"/store/books/{itemId}/{islogged}", true);
+            //return RedirectPermanent($"/store/books/{itemId}/{islogged}");
         }
     }
 }
